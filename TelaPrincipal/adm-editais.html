@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Gerenciar Plano de Estudos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHySURBVDhPpZJPSBRhFMd/d2Z3dnV13TUF8SoaCSpoECoZ6qFAT0EPRQ8Fk0IliEihkkKgBEUohB4KlfRQBKGHCpGoQ6EgHcdK6FpRz85835md2f2YfXrHx/s93/v+7/de+H+YpnEC2d0yWCo5zKj2OD4VAdnVQB+dFBCkY2n5bW4BztbU1c/Pz8/b29vPSkpqf2dnd3d3b2hoCJaQngCMTQC8tLS0sLGxsbW1tba2tjaHBwYnJvY/XVtZWVlZWlpSWloK4+L/AQAjE8BfAFpaWhofHz87Ozs/Pz83Nzc7W1swODDAwMDAgIGBsbExYdF/APBDLwDwsbGxsbGxsbW15eXl5e3t7ePj4+vr6+7u7uLiYmNjY29v7+zs7Nra2tLS0vj4+PDw8Ozs7O3t7ezs7M/Pz8zMzMvLw+fn5+Hh4evr6+Xl5d3d3bW1tQkJCZGRkcnJyWlpaZGRkeXl5QkJCcnJyakpqampKSsrm5ubW1tbKysoHBwcfHx/f39/v7+/j4+P7+/v39/cfHx+fn58fHh4eHh5+fn4eHh7u7u7e3t7a2trm5ubKysru7u7a2trm5uY/MjKysrKysrIyPz8/MzMzPz//+PHj+7s7d85c27179+7du1//vXv3rplzP/744/f7+R01cbA8b4Vj+kS+0JzfYmJioqKi4uPj7e3t7e/v7+/vf3p6evv58+fT09Pe3t7m5ubY2NjS0tLi4uLi4uKqqqrk5ORkZGS4uLiYmJj8+/fv39/f39/f7+/v7+/v7e3t7e3t7e3t7e3t7e3t7e0dHR1dXV37+/tra2v39/d3d3dXV1c3Nzc3NzcXFxcXFxcnJyZKSknJyckpKSkpKSlxcXFxcXFxcXFxcXJyanJyamJyYjIyMsbExNTU1OTk5PT09Pz8/OTk5LS0tLS0tKysrKysrKysrLS3t6OioqKiorq6ur6+voKCgoaGhubm5ra2tqampnZ2dpqamsbGxpaWlqampmZmZlZWVmZmZmZmZnZ2dna2tra2tra2trampmZmZmZmZmZmZmZmZmZmZubl/AsgW+gAAAABJRU5ErkJggg==">
+    <style>
+        :root {
+            --primary-color: #0a84ff;
+            --background-color: #000000;
+            --surface-color: #1c1c1e;
+            --surface-color-secondary: #2c2c2e;
+            --text-color-primary: #f5f5f7;
+            --text-color-secondary: #8a8a8e;
+            --border-color: #3a3a3c;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--background-color); color: var(--text-color-primary); }
+        .dashboard-container { display: grid; grid-template-columns: 240px 1fr; height: 100vh; gap: 24px; padding: 20px; }
+        .sidebar { padding: 10px 0; display: flex; flex-direction: column; }
+        .sidebar-logo { padding: 15px 25px; margin-bottom: 10px; }
+        .sidebar-logo img { width: 50px; }
+        .sidebar-nav ul { list-style: none; width: 100%; padding: 0 15px; }
+        .sidebar-nav li a { display: flex; align-items: center; gap: 20px; color: var(--text-color-secondary); text-decoration: none; padding: 12px 10px; border-radius: 8px; transition: all 0.2s ease-in-out; }
+        .sidebar-nav li a i { font-size: 1.2em; width: 25px; text-align: center; }
+        .sidebar-nav li.active a, .sidebar-nav li a:hover { color: var(--text-color-primary); background-color: var(--surface-color-secondary); }
+        .sidebar-nav li.active a { color: var(--primary-color); }
+
+        .main-content { overflow-y: auto; padding-right: 10px; }
+        .main-content::-webkit-scrollbar { width: 8px; }
+        .main-content::-webkit-scrollbar-track { background: transparent; }
+        .main-content::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+        
+        .page-header { margin-bottom: 30px; }
+        .page-header h1 { font-size: 2.2em; font-weight: 600; }
+
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .admin-widget {
+            background-color: var(--surface-color);
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+        }
+        .admin-widget h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .admin-widget h2 i {
+            color: var(--primary-color);
+        }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; color: var(--text-color-secondary); font-size: 0.9em; margin-bottom: 8px; }
+        .form-group input[type="text"], .form-group input[type="file"], .form-group select {
+            width: 100%;
+            background-color: var(--surface-color-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-color-primary);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
+        }
+
+        #meta-builder {
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+        .meta-entry {
+            background-color: var(--surface-color-secondary);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 3px solid var(--border-color);
+        }
+        .meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-top: 15px;
+        }
+        .checkbox-group input { width: 18px; height: 18px; }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .action-btn {
+            background-color: var(--border-color);
+            color: var(--text-color-primary);
+            border: none;
+            padding: 12px 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+        }
+        .action-btn i { margin-right: 8px; }
+        .action-btn:hover { background-color: #48484a; }
+
+        #save-week-btn {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+         #save-week-btn:hover {
+            background-color: #0077e6;
+        }
+
+        #json-output {
+            width: 100%;
+            height: 200px;
+            background-color: #000;
+            border: 1px solid var(--border-color);
+            color: #34c759;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <a href="#"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHySURBVDhPpZJPSBRhFMd/d2Z3dnV13TUF8SoaCSpoECoZ6qFAT0EPRQ8Fk0IliEihkkKgBEUohB4KlfRQBKGHCpGoQ6EgHcdK6FpRz85835md2f2YfXrHx/s93/v+7/de+H+YpnEC2d0yWCo5zKj2OD4VAdnVQB+dFBCkY2n5bW4BztbU1c/Pz8/b29vPSkpqf2dnd3d3b2hoCJaQngCMTQC8tLS0sLGxsbW1tba2tjaHBwYnJvY/XVtZWVlZWlpSWloK4+L/AQAjE8BfAFpaWhofHz87Ozs/Pz83Nzc7W1swODDAwMDAgIGBsbExYdF/APBDLwDwsbGxsbGxsbW15eXl5e3t7ePj4+vr6+7u7uLiYmNjY29v7+zs7Nra2tLS0vj4+PDw8Ozs7O3t7ezs7M/Pz8zMzMvLw+fn5+Hh4evr6+Xl5d3d3bW1tQkJCZGRkcnJyWlpaZGRkeXl5QkJCcnJyakpqampKSsrm5ubW1tbKysoHBwcfHx/f39/v7+/j4+P7+/v39/cfHx+fn58fHh4eHh5+fn4eHh7u7u7e3t7a2trm5ubKysru7u7a2trm5uY/MjKysrKysrIyPz8/MzMzPz//+PHj+7s7d85c27179+7du1//vXv3rplzP/744/f7+R01cbA8b4Vj+kS+0JzfYmJioqKi4uPj7e3t7e/v7+/vf3p6evv58+fT09Pe3t7m5ubY2NjS0tLi4uLi4uKqqqrk5ORkZGS4uLiYmJj8+/fv39/f39/f7+/v7+/v7e3t7e3t7e3t7e3t7e3t7e0dHR1dXV37+/tra2v39/d3d3dXV1c3Nzc3NzcXFxcXFxcnJyZKSknJyckpKSkpKSlxcXFxcXFxcXFxcXJyanJyamJyYjIyMsbExNTU1OTk5PT09Pz8/OTk5LS0tLS0tKysrKysrKysrLS3t6OioqKiorq6ur6+voKCgoaGhubm5ra2tqampnZ2dpqamsbGxpaWlqampmZmZlZWVmZmZmZmZnZ2dna2tra2tra2trampmZmZmZmZmZmZmZmZmZmZubl/AsgW+gAAAABJRU5ErkJggg==" alt="Logo Meus Estudos"></a>
+            </div>
+              <nav class="sidebar-nav">
+                  <ul>
+                      <li class="active"><a href="#"><i class="fa-solid fa-calendar-days"></i><span>Gerenciar Metas</span></a></li>
+                      <li><a href="#"><i class="fa-solid fa-users"></i><span>Alunos</span></a></li>
+                      <li><a href="#"><i class="fa-solid fa-chart-bar"></i><span>Relatórios</span></a></li>
+                  </ul>
+              </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Painel do Administrador</h1>
+            </header>
+
+            <div class="admin-layout">
+                
+                <div class="main-column">
+                    <div class="admin-widget">
+                        <h2><i class="fa-solid fa-calendar-check"></i> Montar Metas da Semana</h2>
+                        <div class="form-group">
+                            <label for="semana-titulo">Título Principal da Semana</label>
+                            <input type="text" id="semana-titulo" placeholder="Ex: Foco em Legislação e Casos Práticos de APH">
+                        </div>
+        
+                        <div id="meta-builder">
+                             </div>
+                        
+                        <div class="form-actions">
+                             <button type="button" class="action-btn" id="add-meta-btn"><i class="fa-solid fa-plus"></i> Adicionar Tarefa</button>
+                             <button type="submit" class="action-btn" id="save-week-btn"><i class="fa-solid fa-save"></i> Salvar Metas da Semana</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="side-column">
+                     <div class="admin-widget">
+                        <h2><i class="fa-solid fa-upload"></i> Upload de Materiais</h2>
+                        <div class="form-group">
+                            <label for="material-file">Selecione o Arquivo</label>
+                            <input type="file" id="material-file" required>
+                        </div>
+                        <button type="submit" class="action-btn" id="upload-btn">Enviar Material</button>
+                    </div>
+
+                    <div class="admin-widget">
+                        <h2><i class="fa-solid fa-code"></i> Plano Gerado (JSON)</h2>
+                        <textarea id="json-output" readonly placeholder="Os dados do plano aparecerão aqui após salvar..."></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const todasAsMaterias = [ 
+                'Língua Portuguesa', 'Matemática', 'Química', 'Física', 'Biologia', 
+                'Noções de Informática', 'Noções de Agenda Ambiental', 'Legislação', 
+                'Emergência Pré-Hospitalar', 'Teoria Musical', 'Manutenção e Sistemas Automotivos', 
+                'Legislação de Trânsito', 'Questões', 'Redação', 'Revisão', 'Descanso'
+            ];
+
+            const metaBuilder = document.getElementById('meta-builder');
+            const addMetaBtn = document.getElementById('add-meta-btn');
+            const saveWeekBtn = document.getElementById('save-week-btn');
+            const jsonOutput = document.getElementById('json-output');
+            let metaCount = 0;
+
+            function populateSelects(selectElement) {
+                todasAsMaterias.forEach(materia => {
+                    const option = document.createElement('option');
+                    option.value = materia;
+                    option.textContent = materia;
+                    selectElement.appendChild(option);
+                });
+            }
+
+            function addNewMetaEntry() {
+                metaCount++;
+                const newEntry = document.createElement('div');
+                newEntry.className = 'meta-entry';
+                newEntry.innerHTML = `
+                    <div class="meta-grid">
+                        <div class="form-group">
+                            <label>Dia da Semana</label>
+                            <select class="meta-dia">
+                                <option>Segunda-feira</option>
+                                <option>Terça-feira</option>
+                                <option>Quarta-feira</option>
+                                <option>Quinta-feira</option>
+                                <option>Sexta-feira</option>
+                                <option>Sábado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Matéria</label>
+                            <select class="meta-materia"></select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Descrição da Tarefa</label>
+                            <input type="text" class="meta-descricao" placeholder="Ex: Ler Art. 1 ao 30 do Estatuto">
+                        </div>
+                    </div>
+                     <div class="form-group checkbox-group">
+                        <input type="checkbox" class="meta-progresso" id="progresso-${metaCount}" checked>
+                        <label for="progresso-${metaCount}">Contabilizar para o progresso da matéria</label>
+                    </div>
+                `;
+                metaBuilder.appendChild(newEntry);
+                populateSelects(newEntry.querySelector('.meta-materia'));
+            }
+
+            addMetaBtn.addEventListener('click', addNewMetaEntry);
+
+            saveWeekBtn.addEventListener('click', () => {
+                const titulo = document.getElementById('semana-titulo').value;
+                if (!titulo) {
+                    alert('Por favor, defina um Título Principal para a semana.');
+                    return;
+                }
+
+                const diasDaSemana = {
+                    "Segunda-feira": [], "Terça-feira": [], "Quarta-feira": [],
+                    "Quinta-feira": [], "Sexta-feira": [], "Sábado": []
+                };
+
+                const metaEntries = document.querySelectorAll('.meta-entry');
+                metaEntries.forEach((entry, index) => {
+                    const dia = entry.querySelector('.meta-dia').value;
+                    const materia = entry.querySelector('.meta-materia').value;
+                    const descricao = entry.querySelector('.meta-descricao').value;
+                    const contaProgresso = entry.querySelector('.meta-progresso').checked;
+                    
+                    if (descricao) {
+                        diasDaSemana[dia].push({
+                            id: `meta${Date.now() + index}`,
+                            materia: materia,
+                            descricao: descricao,
+                            contaProgresso: contaProgresso
+                        });
+                    }
+                });
+
+                const planoSemanalCompleto = {
+                    titulo: titulo,
+                    dias: Object.keys(diasDaSemana)
+                        .map(dia => ({ dia: dia, metas: diasDaSemana[dia] }))
+                        .filter(d => d.metas.length > 0) // Inclui apenas dias que têm metas
+                };
+                
+                const jsonString = JSON.stringify(planoSemanalCompleto, null, 2);
+                jsonOutput.value = jsonString;
+                alert('Metas da semana salvas com sucesso! A estrutura de dados foi gerada no painel "Plano Gerado (JSON)".');
+            });
+            
+            // Inicia com uma entrada
+            addNewMetaEntry();
+            
+            document.getElementById('upload-btn').addEventListener('click', function() {
+                const fileInput = document.getElementById('material-file');
+                if (fileInput.files.length > 0) {
+                    alert(`Arquivo "${fileInput.files[0].name}" enviado com sucesso!`);
+                    document.getElementById('upload-form').reset();
+                } else {
+                    alert('Por favor, selecione um arquivo.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
