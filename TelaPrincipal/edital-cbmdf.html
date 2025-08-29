@@ -306,6 +306,44 @@
         .download-btn { background-color: var(--border-color); color: var(--text-color-primary); border: none; border-radius: 8px; padding: 8px 15px; font-size: 0.9em; font-weight: 500; cursor: pointer; transition: background-color 0.2s; }
         .download-btn:hover { background-color: #48484a; }
 
+        /* --- NOVO WIDGET DE NAVEGAÇÃO POR SEMANAS --- */
+        .weeks-widget {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+        .weeks-widget h3 {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: var(--text-color-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .weeks-nav {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .weeks-nav a {
+            display: block;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-color-primary);
+            background-color: var(--surface-color-secondary);
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .weeks-nav a:hover {
+            background-color: var(--border-color);
+        }
+        .weeks-nav a.active {
+            background-color: var(--primary-color);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(10, 132, 255, 0.2);
+        }
+
     </style>
 
 </head>
@@ -314,12 +352,12 @@
         
         <aside class="sidebar">
             <div class="sidebar-logo">
-                <a href="#"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHySURBVDhPpZJPSBRhFMd/d2Z3dnV13TUF8SoaCSpoECoZ6qFAT0EPRQ8Fk0IliEihkkKgBEUohB4KlfRQBKGHCpGoQ6EgHcdK6FpRz85835md2f2YfXrHx/s93/v+7/de+H+YpnEC2d0yWCo5zKj2OD4VAdnVQB+dFBCkY2n5bW4BztbU1c/Pz8/b29vPSkpqf2dnd3d3b2hoCJaQngCMTQC8tLS0sLGxsbW1tba2tjaHBwYnJvY/XVtZWVlZWlpSWloK4+L/AQAjE8BfAFpaWhofHz87Ozs/Pz83Nzc7W1swODDAwMDAgIGBsbExYdF/APBDLwDwsbGxsbGxsbW15eXl5e3t7ePj4+vr6+7u7uLiYmNjY29v7+zs7Nra2tLS0vj4+PDw8Ozs7O3t7ezs7M/Pz8zMzMvLw+fn5+Hh4evr6+Xl5d3d3bW1tQkJCZGRkcnJyWlpaZGRkeXl5QkJCcnJyakpqampKSsrm5ubW1tbKysoHBwcfHx/f39/v7+/j4+P7+/v39/cfHx+fn58fHh4eHh5+fn4eHh7u7u7e3t7a2trm5ubKysru7u7a2trm5uY/MjKysrKysrIyPz8/MzMzPz//+PHj+7s7d85c27179+7du1//vXv3rplzP/744/f7+R01cbA8b4Vj+kS+0JzfYmJioqKi4uPj7e3t7e/v7+/vf3p6evv58+fT09Pe3t7m5ubY2NjS0tLi4uLi4uKqqqrk5ORkZGS4uLiYmJj8+/fv39/f39/f7+/v7+/v7e3t7e3t7e3t7e3t7e3t7e0dHR1dXV37+/tra2v39/d3d3dXV1c3Nzc3NzcXFxcXFxcnJyZKSknJyckpKSkpKSlxcXFxcXFxcXFxcXJyanJyamJyYjIyMsbExNTU1OTk5PT09Pz8/OTk5LS0tLS0tKysrKysrKysrLS3t6OioqKiorq6ur6+voKCgoaGhubm5ra2tqampnZ2dpqamsbGxpaWlqampmZmZlZWVmZmZmZmZnZ2dna2tra2tra2trampmZmZmZmZmZmZmZmZmZmZubl/AsgW+gAAAABJRU5ErkJggg==" alt="Logo Meus Estudos"></a>
+                 <a href="TelaPrincipal.html"> <img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
             </div>
               <nav class="sidebar-nav">
                   <ul>
                       <li><a href="TelaPrincipal.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-                      <li class="active"><a href="#"><i class="fa-solid fa-book"></i><span>Conteúdo</span></a></li>
+                      <li class="active"><a href="conteudos.html"><i class="fa-solid fa-book"></i><span>Conteúdo</span></a></li>
                       <li><a href="questoes.html"><i class="fa-solid fa-list-check"></i><span>Questões</span></a></li>
                       <li><a href="flashcards.html"><i class="fa-solid fa-layer-group"></i><span>Flashcards</span></a></li>
                   </ul>
@@ -332,11 +370,13 @@
                 <p>Acompanhe seu progresso e mantenha a disciplina para alcançar a aprovação.</p>
             </header>
 
-            <section class="progress-panel" id="progress-panel">
-                 </section>
+            <section class="progress-panel" id="progress-panel"></section>
 
             <section class="plan-container">
-                <div id="materiais-container" class="accordion-container">
+                <h2 id="metas-title">Metas da Semana</h2>
+                <div id="metas-semanais-container" class="accordion-container"></div>
+                
+                <div id="materiais-container" class="accordion-container" style="margin-top: 40px;">
                     <div class="accordion-item">
                         <div class="accordion-header">
                             <h3><i class="fa-solid fa-download"></i> Materiais de Apoio</h3>
@@ -353,61 +393,90 @@
                         </div>
                     </div>
                 </div>
-
-                <h2>Metas da Semana</h2>
-                <div id="metas-semanais-container" class="accordion-container">
-                </div>
-
             </section>
         </main>
         
-        <aside class="right-column"></aside>
+        <aside class="right-column">
+             <div class="widget">
+                <div class="weeks-widget">
+                    <h3>Plano de Estudos</h3>
+                    <nav>
+                        <ul id="weeks-navigation" class="weeks-nav">
+                            </ul>
+                    </nav>
+                </div>
+            </div>
+        </aside>
     </div>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
 
+        // --- BANCO DE DADOS ---
         const todasAsMaterias = [ 
             'Língua Portuguesa', 'Matemática', 'Química', 'Física', 'Biologia', 
             'Noções de Informática', 'Noções de Agenda Ambiental', 'Legislação', 
             'Emergência Pré-Hospitalar', 'Teoria Musical', 'Manutenção e Sistemas Automotivos', 
-            'Legislação de Trânsito' 
+            'Legislação de Trânsito', 'Questões', 'Redação', 'Revisão'
         ];
-
-        const metasDaSemanaAdmin = {
-            titulo: "Foco em Legislação e Resolução de Questões",
-            dias: [
-                { dia: "Segunda-feira", metas: [
-                    { id: "meta1", materia: "Legislação", descricao: "Ler e grifar os 30 primeiros artigos do Estatuto dos Bombeiros (Lei 7.479/86)." },
-                    { id: "meta2", materia: "Língua Portuguesa", descricao: "Revisar o uso da crase e resolver a folha de exercícios." }
-                ]},
-                { dia: "Terça-feira", metas: [
-                    { id: "meta3", materia: "Emergência Pré-Hospitalar", descricao: "Assistir videoaula sobre Suporte Básico de Vida (SBV)." },
-                    { id: "meta4", materia: "Matemática", descricao: "Resolver 15 exercícios de Análise Combinatória." }
-                ]},
-                 { dia: "Quarta-feira", metas: [
-                    { id: "meta5", materia: "Legislação de Trânsito", descricao: "Estudar as especificidades para veículos de emergência no CTB." },
-                    { id: "meta6", materia: "Química", descricao: "Revisar conceitos de Termoquímica." }
-                ]},
-                { dia: "Quinta-feira", metas: [
-                    { id: "meta7", materia: "Teoria Musical", descricao: "Praticar solfejo rítmico por 30 minutos." },
-                    { id: "meta8", materia: "Física", descricao: "Revisar as Leis de Newton." }
-                ]},
-                { dia: "Sexta-feira", metas: [
-                    { id: "meta9", materia: "Questões", descricao: "Resolver 50 questões de matérias variadas da semana." },
-                    { id: "meta10", materia: "Redação", descricao: "Escrever uma redação sobre o tema proposto." }
-                ]},
-                { dia: "Sábado", metas: [
-                    { id: "meta11", materia: "Revisão", descricao: "Revisar todos os tópicos estudados na semana e corrigir questões." }
-                ]}
-            ]
+        
+        // Simulação de dados para 4 semanas
+        const planoDeEstudosCompleto = {
+            1: { // Semana 1
+                titulo: "Foco em Legislação e Resolução de Questões",
+                dias: [
+                    { dia: "Segunda-feira", metas: [
+                        { id: "s1m1", materia: "Legislação", descricao: "Ler e grifar os 30 primeiros artigos do Estatuto dos Bombeiros (Lei 7.479/86)." },
+                        { id: "s1m2", materia: "Língua Portuguesa", descricao: "Revisar o uso da crase e resolver a folha de exercícios." }
+                    ]},
+                    { dia: "Terça-feira", metas: [
+                        { id: "s1m3", materia: "Emergência Pré-Hospitalar", descricao: "Assistir videoaula sobre Suporte Básico de Vida (SBV)." },
+                        { id: "s1m4", materia: "Matemática", descricao: "Resolver 15 exercícios de Análise Combinatória." }
+                    ]},
+                    { dia: "Quarta-feira", metas: [{ id: "s1m5", materia: "Química", descricao: "Revisar conceitos de Termoquímica." }]},
+                    { dia: "Quinta-feira", metas: [{ id: "s1m6", materia: "Física", descricao: "Revisar as Leis de Newton." }]},
+                    { dia: "Sexta-feira", metas: [{ id: "s1m7", materia: "Questões", descricao: "Resolver 50 questões de matérias variadas da semana." }]},
+                    { dia: "Sábado", metas: [{ id: "s1m8", materia: "Revisão", descricao: "Revisar todos os tópicos estudados na semana." }]}
+                ]
+            },
+            2: { // Semana 2
+                titulo: "Aprofundamento em APH e Exatas",
+                dias: [
+                    { dia: "Segunda-feira", metas: [
+                        { id: "s2m1", materia: "Emergência Pré-Hospitalar", descricao: "Estudo de caso: Atendimento a politraumatizados." },
+                        { id: "s2m2", materia: "Legislação", descricao: "Revisar os artigos 31 a 60 do Estatuto." }
+                    ]},
+                     { dia: "Terça-feira", metas: [{ id: "s2m3", materia: "Matemática", descricao: "Estudar Progressão Aritmética e Geométrica." }]},
+                     { dia: "Quarta-feira", metas: [{ id: "s2m4", materia: "Física", descricao: "Estudar Cinemática: MUV." }]}
+                ]
+            },
+            3: { // Semana 3
+                 titulo: "Foco em Biologia e Legislação de Trânsito",
+                 dias: [
+                    { dia: "Segunda-feira", metas: [{ id: "s3m1", materia: "Biologia", descricao: "Estudar Citologia: Membrana e Citoplasma." }]},
+                    { dia: "Terça-feira", metas: [{ id: "s3m2", materia: "Legislação de Trânsito", descricao: "Estudar as especificidades para veículos de emergência no CTB." }]}
+                 ]
+            },
+            4: { // Semana 4
+                titulo: "Revisão Geral e Simulado",
+                 dias: [
+                    { dia: "Segunda-feira", metas: [{ id: "s4m1", materia: "Revisão", descricao: "Revisar os principais pontos de Legislação." }]},
+                    { dia: "Terça-feira", metas: [{ id: "s4m2", materia: "Revisão", descricao: "Revisar os principais pontos de APH." }]},
+                    { dia: "Sábado", metas: [{ id: "s4m3", materia: "Questões", descricao: "Realizar um simulado completo com 60 questões." }]}
+                 ]
+            }
         };
 
+        // --- REFERÊNCIAS DO DOM ---
         const progressPanel = document.getElementById('progress-panel');
         const metasContainer = document.getElementById('metas-semanais-container');
+        const metasTitle = document.getElementById('metas-title');
+        const weeksNavContainer = document.getElementById('weeks-navigation');
         
         let progressoMetas = JSON.parse(localStorage.getItem('progressoMetasCBMDF')) || {};
+        let activeWeek = 1;
 
+        // --- FUNÇÕES ---
         function salvarProgresso() {
             localStorage.setItem('progressoMetasCBMDF', JSON.stringify(progressoMetas));
         }
@@ -433,15 +502,24 @@
             });
         }
         
-        function renderMetas() {
-            metasContainer.innerHTML = '';
+        function renderMetas(weekNumber) {
+            const semanaData = planoDeEstudosCompleto[weekNumber];
+            if (!semanaData) {
+                metasContainer.innerHTML = '<p>Plano de estudos para esta semana não encontrado.</p>';
+                return;
+            }
+
+            activeWeek = weekNumber;
+            metasTitle.textContent = `Metas da Semana ${weekNumber}`;
+            metasContainer.innerHTML = ''; // Limpa o container antes de renderizar
+            
             const metasEl = document.createElement('div');
             metasEl.className = 'accordion-item active';
 
             const diaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
             const hoje = diaSemana[new Date().getDay()];
 
-            const diasHtml = metasDaSemanaAdmin.dias.map(diaInfo => {
+            const diasHtml = semanaData.dias.map(diaInfo => {
                 const isToday = diaInfo.dia === hoje ? 'today' : '';
                 const metasHtml = diaInfo.metas.map(meta => {
                     const isCompleted = progressoMetas[meta.id] ? 'completed' : '';
@@ -466,20 +544,43 @@
 
             metasEl.innerHTML = `
                 <div class="accordion-header">
-                    <h3><i class="fa-solid fa-bullseye"></i> ${metasDaSemanaAdmin.titulo}</h3>
+                    <h3><i class="fa-solid fa-bullseye"></i> ${semanaData.titulo}</h3>
                     <i class="fas fa-plus icon"></i>
                 </div>
-                <div class="accordion-content">
-                    ${diasHtml}
-                </div>`;
+                <div class="accordion-content">${diasHtml}</div>`;
             metasContainer.appendChild(metasEl);
+            
+            updateActiveWeekLink();
+        }
+
+        function renderWeeksNavigation() {
+            weeksNavContainer.innerHTML = '';
+            Object.keys(planoDeEstudosCompleto).forEach(weekNum => {
+                const li = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = '#';
+                link.dataset.week = weekNum;
+                link.textContent = `Semana ${weekNum}`;
+                li.appendChild(link);
+                weeksNavContainer.appendChild(li);
+            });
+        }
+        
+        function updateActiveWeekLink() {
+            document.querySelectorAll('#weeks-navigation a').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.week == activeWeek) {
+                    link.classList.add('active');
+                }
+            });
         }
 
         function setupEventListeners() {
-             document.querySelectorAll('.accordion-header').forEach(header => {
-                header.addEventListener('click', () => {
+             document.querySelector('.accordion-header').addEventListener('click', (e) => {
+                 const header = e.target.closest('.accordion-header');
+                 if(header) {
                     header.parentElement.classList.toggle('active');
-                });
+                 }
             });
 
             metasContainer.addEventListener('change', (e) => {
@@ -496,10 +597,20 @@
                     salvarProgresso();
                 }
             });
+
+            weeksNavContainer.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (e.target.tagName === 'A') {
+                    const weekNum = e.target.dataset.week;
+                    renderMetas(parseInt(weekNum));
+                }
+            });
         }
         
+        // --- INICIALIZAÇÃO ---
         renderProgressPanel();
-        renderMetas();
+        renderWeeksNavigation();
+        renderMetas(activeWeek); // Carrega a semana 1 por padrão
         setupEventListeners();
 
     });

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Concurso - CBMDF</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="icon" type="image/png" href="fotos/logo.png">
+    <style>
+        /* --- ESTILOS GLOBAIS E PADRÕES DO PROJETO --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0a84ff;
+            --success-color: #34c759;
+            --background-color: #000000;
+            --surface-color: #1c1c1e;
+            --surface-color-secondary: #2c2c2e;
+            --text-color-primary: #f5f5f7;
+            --text-color-secondary: #8a8a8e;
+            --border-color: #3a3a3c;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color-primary);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- LAYOUT PRINCIPAL (PADRÃO) --- */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            height: 100vh;
+            gap: 24px;
+            padding: 20px;
+        }
+
+        /* --- SIDEBAR ESQUERDA (PADRÃO IDÊNTICO) --- */
+        .sidebar {
+            padding: 10px 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-user {
+            padding: 15px 25px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-user h2 {
+            font-size: 1.8em;
+            font-weight: 600;
+            line-height: 50px;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+            width: 100%;
+            padding: 0 15px;
+        }
+
+        .sidebar-nav li a {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: var(--text-color-secondary);
+            text-decoration: none;
+            padding: 12px 10px;
+            border-radius: 8px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .sidebar-nav li a i {
+            font-size: 1.2em;
+            width: 25px;
+            text-align: center;
+        }
+
+        .sidebar-nav li a span {
+            font-size: 1em;
+            font-weight: 500;
+        }
+
+        .sidebar-nav li.active a,
+        .sidebar-nav li a:hover {
+            color: var(--text-color-primary);
+            background-color: var(--surface-color-secondary);
+        }
+
+        /* --- CONTEÚDO PRINCIPAL DA NOVA PÁGINA --- */
+        .main-content {
+            overflow-y: auto;
+            padding-right: 15px;
+        }
+        .main-content::-webkit-scrollbar { width: 8px; }
+        .main-content::-webkit-scrollbar-track { background: transparent; }
+        .main-content::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 2.2em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: var(--text-color-secondary);
+            font-size: 1.1em;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .info-card {
+            background-color: var(--surface-color);
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .info-card i {
+            font-size: 2em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .info-card .card-title {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: var(--text-color-secondary);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .info-card .card-value {
+            font-size: 1.8em;
+            font-weight: 600;
+        }
+
+        .widget {
+            background-color: var(--surface-color);
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+        }
+
+        .widget h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* ESTILOS PARA A TABELA DE DISCIPLINAS */
+        .disciplinas-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .disciplinas-table th, .disciplinas-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .disciplinas-table thead {
+            background-color: var(--surface-color-secondary);
+            color: var(--text-color-secondary);
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        .disciplinas-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .disciplinas-table td {
+            font-weight: 500;
+        }
+        
+        .disciplinas-table .total-row {
+            background-color: var(--surface-color-secondary);
+            font-weight: 600;
+        }
+
+        /* BOTÃO DE AÇÃO PRINCIPAL */
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-align: center;
+            transition: background-color 0.2s;
+            margin-top: 20px;
+            width: 100%;
+        }
+        
+        .cta-button:hover {
+            background-color: #0077e6;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        
+        <aside class="sidebar">
+            <div class="sidebar-user">
+                <h2>Mike</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="TelaPrincipal.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+                    <li class="active"><a href="conteudos.html"><i class="fa-solid fa-book"></i><span>Conteúdo</span></a></li>
+                    <li><a href="questoes.html"><i class="fa-solid fa-list-check"></i><span>Questões</span></a></li>
+                    <li><a href="flashcards.html"><i class="fa-solid fa-layer-group"></i><span>Flashcards</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Concurso CBMDF</h1>
+                <p>Resumo dos principais detalhes do edital e da estrutura da prova.</p>
+            </header>
+
+            <section class="info-grid">
+                <div class="info-card">
+                    <i class="fa-solid fa-clipboard-user"></i>
+                    <span class="card-title">Vagas</span>
+                    <span class="card-value">1.178</span>
+                </div>
+                <div class="info-card">
+                    <i class="fa-solid fa-sack-dollar"></i>
+                    <span class="card-title">Salário Inicial</span>
+                    <span class="card-value">R$ 5.332,64</span>
+                </div>
+                <div class="info-card">
+                    <i class="fa-solid fa-building-columns"></i>
+                    <span class="card-title">Banca</span>
+                    <span class="card-value">AOCP</span>
+                </div>
+            </section>
+
+            <section class="widget">
+                <h2>Estrutura da Prova</h2>
+                <table class="disciplinas-table">
+                    <thead>
+                        <tr>
+                            <th>Disciplina</th>
+                            <th>Questões</th>
+                            <th>Valor por Questão</th>
+                            <th>Pontuação Máxima</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Língua Portuguesa</td>
+                            <td>10</td>
+                            <td>2</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <td>Informática Básica</td>
+                            <td>5</td>
+                            <td>1</td>
+                            <td>05</td>
+                        </tr>
+                        <tr>
+                            <td>Noções de Direito</td>
+                            <td>10</td>
+                            <td>1</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>Direitos Humanos</td>
+                            <td>10</td>
+                            <td>2</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <td>Legislação Especial</td>
+                            <td>20</td>
+                            <td>2</td>
+                            <td>40</td>
+                        </tr>
+                        <tr>
+                            <td>Raciocínio Lógico</td>
+                            <td>5</td>
+                            <td>1</td>
+                            <td>05</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><strong>Total Objetiva</strong></td>
+                            <td><strong>60</strong></td>
+                            <td>-</td>
+                            <td><strong>100</strong></td>
+                        </tr>
+                         <tr>
+                            <td>Redação</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>100</td>
+                        </tr>
+                    </tbody>
+                </table>
+                 <p style="text-align: right; margin-top: 15px; color: var(--text-color-secondary);">
+                    <strong>Pontuação Mínima para Aprovação:</strong> 60% na Prova Geral e 60% na Redação.
+                </p>
+            </section>
+
+            <a href="edital-cbmdf.html" class="cta-button">
+                <i class="fa-solid fa-arrow-right"></i> Acessar Plano de Estudos Completo
+            </a>
+            
+        </main>
+
+    </div>
+</body>
+</html>
